@@ -64,9 +64,17 @@ v-bind und v-model zu erkennen.
           </span>
           <div class="col-xs-6 input-group">
             <input type="number" required="required" size="5"
-                   step=".5" min="0" max="100" class="form-control"
-                   v-model.number="examPercentage"/>
-            <div class="input-group-addon">%</div>
+                   step=".5" min="0" max="90" class="form-control"
+                   v-model.number="examPoints"/>
+            <div class="input-group-addon">Punkte</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <span class="col-xs-6 control-label">
+            entspricht
+          </span>
+          <div class="col-xs-6 form-control-static">
+            {{ examPercentage.toFixed(1) }} %
           </div>
         </div>
 

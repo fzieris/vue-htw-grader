@@ -11,13 +11,16 @@ export default {
         maxBonusPoints: {
             type: Number,
             default: 0
+        },
+        examPoints: {
+            type: Number,
+            default: 90
         }
     },
     data() {
         return {
             regularPoints: this.maxExercisePoints,
-            bonusPoints: 0,
-            examPercentage: 100
+            bonusPoints: 0
         }
     },
     components: { AllGrades },
@@ -39,6 +42,12 @@ export default {
          */
         exerciseGrade: function() {
             return this.percentageToMark(this.exercisePercentage);
+        },
+        /**
+         * zwischen 0 und 100
+         */
+        examPercentage: function() {
+            return this.examPoints / 90 * 100;
         },
         /**
          * zwischen 1.0 und 5.0
