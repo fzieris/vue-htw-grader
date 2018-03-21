@@ -106,7 +106,34 @@ export default {
          */
         calcRoundedAverage: function(a, b) {
             let raw = this.calcRawAverage(a, b);
-            return (raw <= 4) ? (Math.floor(Math.round(raw * 6)/2)/3).toFixed(1) : '5.0';
+
+            if (raw > 4) {
+                return '5.0';
+            }
+
+            // Nächstgelegene Note auf der Notenskala finden
+            let minGrade = 1;
+            let minDelta = raw - minGrade;
+            for (let grade of this.allGrades()) {
+                // JavaScript floats sind ungenau, daher auf zwei Stellen runden
+                let currentDelta = Math.abs(raw - grade).toFixed(2);
+                // Regel: bei einem Wert genau zwischen zwei Noten wird die
+                // bessere Note gewählt -- ist gewährleistet, weil wir von 1.0
+                // zu 4.0 iterieren und das Delta echt kleiner sein muss
+                if (currentDelta < minDelta) {
+                    minDelta = currentDelta;
+                    minGrade = grade;
+                }
+            }
+            return minGrade.toFixed(1);
+        },
+        allGrades: function() {
+            let allGrades = [];
+            for (let i = 1; i <= 10; i++) {
+                let gradeString = ((i+2)/3).toFixed(1);
+                allGrades.push(parseFloat(gradeString));
+            }
+            return allGrades;
         }
     }
 }
